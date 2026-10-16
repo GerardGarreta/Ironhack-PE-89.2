@@ -107,6 +107,9 @@ Ejercicio 4. Comprobación
 | Mensaje cifrado en hexadecimal | DB F4 EF F6 B3 D9 F4 F1 B2 |
 | Mensaje recuperado por Bob | Hola Bob! |
 
+Evidencias:
 
+- [bob_servidor.png](./evidencias/bob_servidor.png)
+- [alice_cliente.png](./evidencias/alice_cliente.png)
 
 
