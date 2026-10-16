@@ -68,8 +68,8 @@ Ejercicio 1. Preparación del entorno
 
 - Archivos del ejercicio:
 
-  - Crear.sh
-  - docker-compose.yml
+  - [Crear.sh](./scripts/Crear.sh)
+  - [docker-compose.yml](./docker-compose.yml)
      
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
