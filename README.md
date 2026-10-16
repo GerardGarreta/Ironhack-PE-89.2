@@ -73,6 +73,39 @@ Ejercicio 1. Preparación del entorno
      
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+Ejercicio 2. Servidor Bob
+
+- Generación del Python: "bob_servidor.py"
+
+- Aechivo del ejercicio:
+
+  - [bob_servidor.py](./scripts/bob_servidor.py)
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Ejercicio 3. Cliente Alice
+
+- Generación del Python: "alice_cliente.py"
+
+- Aechivo del ejercicio:
+
+  - [alice_cliente.py](./scripts/alice_cliente.py)
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Ejercicio 4. Comprobación
+
+| Elemento | Valor |
+| :--- | :--- |
+| Clave privada de Alice | 3 |
+| Clave pública de Alice | 216 (6^3 \bmod 251) |
+| Clave privada de Bob | 4 |
+| Clave pública de Bob | 41 | (6^4 \bmod 251) |
+| Clave compartida calculada por Alice | 147 (41^3 \bmod 251) |
+| Clave compartida calculada por Bob | 147 (216^4 \bmod 251) |
+| Mensaje original | Hola Bob! |
+| Mensaje cifrado en hexadecimal | DB F4 EF F6 B3 D9 F4 F1 B2 |
+| Mensaje recuperado por Bob | Hola Bob! |
 
 
 
