@@ -109,7 +109,7 @@ Ejercicio 4. Comprobación
 
 Evidencias:
 
-- [bob_servidor.png](./Evidencias/bob_servidor.png)
-- [alice_cliente.png](./Evidencias/alice_cliente.png)
+- [bob_servidor.png](./Evidencias/bob_servidor.PNG)
+- [alice_cliente.png](./Evidencias/alice_cliente.PNG)
 
 
