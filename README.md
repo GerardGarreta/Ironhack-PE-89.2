@@ -68,7 +68,7 @@ Ejercicio 1. Preparación del entorno
 
 - Archivos del ejercicio:
 
-  - [Crear.sh](./scripts/Crear.sh)
+  - [Crear.sh](./Scripts/Crear.sh)
   - [docker-compose.yml](./docker-compose.yml)
      
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -79,7 +79,7 @@ Ejercicio 2. Servidor Bob
 
 - Aechivo del ejercicio:
 
-  - [bob_servidor.py](./scripts/bob_servidor.py)
+  - [bob_servidor.py](./Scripts/bob_servidor.py)
 
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -89,7 +89,7 @@ Ejercicio 3. Cliente Alice
 
 - Aechivo del ejercicio:
 
-  - [alice_cliente.py](./scripts/alice_cliente.py)
+  - [alice_cliente.py](./Scripts/alice_cliente.py)
 
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -109,7 +109,7 @@ Ejercicio 4. Comprobación
 
 Evidencias:
 
-- [bob_servidor.png](./evidencias/bob_servidor.png)
-- [alice_cliente.png](./evidencias/alice_cliente.png)
+- [bob_servidor.png](./Evidencias/bob_servidor.png)
+- [alice_cliente.png](./Evidencias/alice_cliente.png)
 
 
