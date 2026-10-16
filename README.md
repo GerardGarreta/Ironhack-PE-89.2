@@ -1,8 +1,8 @@
 # Ironhack PE 89.2
 
-PARTE 1 Selección de técnicas criptográficas
+## PARTE 1 - Selección de técnicas criptográficas
 
-Ejercicio 1. Selección de la técnica adecuada
+### Ejercicio 1. Selección de la técnica adecuada
 
 A continuación se relacionan las necesidades de seguridad con la técnica criptográfica más idónea y su justificación breve:
 
@@ -17,7 +17,7 @@ A continuación se relacionan las necesidades de seguridad con la técnica cript
 
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-Ejercicio 2. Selección de una configuración segura
+### Ejercicio 2. Selección de una configuración segura
 
 ¿Qué configuración seleccionarías para proteger una comunicación actual? Justifica la respuesta.
 
@@ -55,9 +55,9 @@ Un certificado digital en el contexto de TLS aporta principalmente:
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
-PARTE-2 Intercambio de claves mediante Diffie–Hellman y cifrado XOR
+## PARTE 2 - Intercambio de claves mediante Diffie–Hellman y cifrado XOR
 
-Ejercicio 1. Preparación del entorno
+### Ejercicio 1. Preparación del entorno
 
 - Generación de script para la creación del entorno: "Crear.sh"
   
@@ -73,7 +73,7 @@ Ejercicio 1. Preparación del entorno
      
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-Ejercicio 2. Servidor Bob
+### Ejercicio 2. Servidor Bob
 
 - Generación del Python: "bob_servidor.py"
 
@@ -83,7 +83,7 @@ Ejercicio 2. Servidor Bob
 
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-Ejercicio 3. Cliente Alice
+### Ejercicio 3. Cliente Alice
 
 - Generación del Python: "alice_cliente.py"
 
@@ -93,7 +93,7 @@ Ejercicio 3. Cliente Alice
 
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-Ejercicio 4. Comprobación
+### Ejercicio 4. Comprobación
 
 | Elemento | Valor |
 | :--- | :--- |
@@ -113,3 +113,78 @@ Evidencias:
 - [alice_cliente.png](./Evidencias/alice_cliente.PNG)
 
 
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+## Parte 3 - Análisis y Verificación del Certificado Digital (PE 89.2)
+
+### Ejercicio 1. Análisis del certificado
+
+Evidencias en: 
+
+ - [CertificadoServidor.png](./Evidencias/CertificadoServidor.PNG)
+ - [CertServFingerPrint.png](./Evidencias/CertServFingerPrint.PNG)
+
+| Elemento | Valor encontrado |
+| :--- | :--- |
+| **Sujeto del certificado** | |
+| — Nombre común (CN) | `servidor.pe89.local` |
+| — Organización | `CETI Formacion` (OU: `PE 89.2`, C: `ES`) |
+| **Emisor** | `C=ES, O=CETI Formacion, OU=Laboratorio de Criptografia, CN=CETI Lab Root CA 2026` |
+| **Número de serie** | `2300585473 (0x89202601)` |
+| **Fecha de inicio** | `Oct 16 06:21:14 2026 GMT` |
+| **Fecha de caducidad** | `Oct 16 06:21:14 2027 GMT` |
+| **Algoritmo de clave pública** | `RSA` (`rsaEncryption`) |
+| **Tamaño de la clave pública** | `2048 bits` |
+| **Algoritmo de firma** | `sha256WithRSAEncryption` |
+| **Huella digital SHA-256** | `C2:6C:98:F6:63:81:45:0C:04:9A:BA:29:72:B7:FB:CD:24:DB:54:31:27:95:E5:CB:BC:F0:06:82:56:1E:D7:14` |
+| **Subject Alternative Name (SAN)** | `DNS:servidor.pe89.local, DNS:www.servidor.pe89.local, IP Address:172.28.0.30` |
+| **Key Usage** | `Digital Signature, Key Encipherment` (Crítico) |
+| **Extended Key Usage** | `TLS Web Server Authentication` |
+| **¿Puede actuar como CA?** | `No (Basic Constraints: CA:FALSE)` |
+
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+### Ejercicio 2. Interpretación
+
+1. **¿Es un certificado de servidor o un certificado de autoridad de certificación? ¿Qué campos permiten determinarlo?**
+   * Es un **certificado de servidor** (entidad final). Los campos que lo determinan son:
+     * **Basic Constraints:** Muestra `CA:FALSE`, lo que indica explícitamente que no es una autoridad de certificación y no puede emitir otros certificados.
+     * **Extended Key Usage (EKU):** Especifica únicamente `TLS Web Server Authentication`, diseñado para autenticar servidores web.
+
+2. **¿Qué información del certificado permite relacionarlo con la identidad del servidor?**
+   * El campo **Nombre Común (CN)** del sujeto (`servidor.pe89.local`) y, de forma más importante en los estándares actuales, la extensión **Subject Alternative Name (SAN)**, que incluye los nombres de dominio permitidos (`servidor.pe89.local`, `www.servidor.pe89.local`) y la dirección IP (`172.28.0.30`).
+
+3. **¿Qué parte del certificado puede distribuirse públicamente?**
+   * **Todo el certificado completo** (`certificado_servidor_PE89_2.crt`). Está diseñado para ser público y se envía a los clientes durante el protocolo de negociación (Handshake) de TLS. Contiene la clave pública, los datos de identidad y la firma de la CA, pero **nunca** contiene la clave privada.
+
+4. **¿Contiene el certificado la clave privada asociada?**
+   * **No.** Los certificados públicos de tipo `.crt` solo almacenan la **clave pública** y los metadatos de identidad. La clave privada se mantiene almacenada de forma segura y secreta de manera independiente en el servidor web.
+
+5. **¿Qué riesgo existiría si la clave privada asociada al certificado fuera publicada o robada?**
+   * El riesgo principal es la **suplantación de identidad (Man-in-the-Middle)**. Un atacante que robe la clave privada podría hacerse pasar por `servidor.pe89.local`, interceptar el tráfico de los usuarios, descifrar las comunicaciones (si no se emplea Perfect Forward Secrecy) o emitir respuestas falsas fingiendo ser el servidor legítimo.
+
+
+______________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+### Ejercicio 3. Verificación
+
+Evidencias en: 
+
+ - [CertVerify.png](./Evidencias/CertVerify.PNG)
+
+
+* **El comando utilizado:**
+  ```bash
+  openssl verify -CAfile CA_laboratorio_PE89_2.crt certificado_servidor_PE89_2.crt
+
+* **La salida obtenida:**
+  ```bash
+  certificado_servidor_PE89_2.crt: OK
+
+* **Breve explicación indicando si la verificación ha sido correcta y qué significa el resultado:**
+
+  - La verificación ha sido correctamente superada (OK). Este resultado significa que OpenSSL ha validado de forma criptográfica que la firma digital del certificado del servidor (certificado_servidor_PE89_2.crt) fue emitida legítimamente utilizando la clave privada correspondiente a la Autoridad de Certificación raíz proporcionada (CA_laboratorio_PE89_2.crt). Por lo tanto, confirma que la cadena de confianza es íntegra, que el certificado es auténtico y que no ha sufrido ninguna alteración.
